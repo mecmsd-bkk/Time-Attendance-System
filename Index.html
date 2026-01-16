@@ -1,133 +1,40 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="th">
+<head>
     <base target="_top">
-    <?!= include('CSS'); ?>
-  </head>
-  <body>
-    <div class="container">
-      <header>
-        <h1>ระบบจองเวลาเรียนออนไลน์ SHEE Media (รพ.ราชพิพัฒน์)</h1>
-      </header>
-      
-      <nav>
-        <button id="booking-tab" class="active">การจอง</button>
-        <button id="summary-tab">สรุปผลการเรียนและประวัติการจอง</button>
-      </nav>
-
-      <main id="booking-page">
-        <div class="user-selection-area">
-          <p class="hospital-name">โรงพยาบาลราชพิพัฒน์</p>
-          <label for="user-select">กรุณาเลือก User ที่ต้องการ</label>
-          <div class="custom-select-wrapper">
-            <select id="user-select">
-              <option value="">-- เลือก User --</option>
-            </select>
-          </div>
-        </div>
-
-        <div id="calendar-container" class="hidden">
-            <div class="calendar-header">
-                <button id="prev-month-btn">&lt;</button>
-                <h2 id="month-year-display"></h2>
-                <button id="next-month-btn">&gt;</button>
-            </div>
-            <div id="calendar-grid"></div>
-        </div>
-      </main>
-
-      <main id="summary-page" class="hidden">
-        <div class="filter-bar">
-            <input list="summary-names-list" id="summary-name-filter" class="form-control" placeholder="พิมพ์เพื่อค้นหาชื่อ">
-            <datalist id="summary-names-list"></datalist>
-            <input type="date" id="summary-date-filter" class="form-control">
-            <select id="summary-status-filter" class="form-control">
-                <option value="">ทุกสถานะ</option>
-                <option value="completed">เรียนครบแล้ว</option>
-                <option value="inprogress">กำลังเรียน</option>
-            </select>
-        </div>
-
-        <div id="course-progress-container">
-            </div>
-        
-        <div id="booking-history-container">
-            <h4>ประวัติการจองทั้งหมด</h4>
-            <input type="text" id="history-search-input" class="form-control" placeholder="ค้นหาวิชา...">
-            <div id="history-table">
-                </div>
-        </div>
-      </main>
-
-    </div>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ระบบบันทึกเข้าออกเวลาการทำงาน</title>
     
-    <div id="booking-popup" class="popup-container hidden">
-      <div class="popup-content">
-        <h3>รายละเอียดการจอง</h3>
-        <p>วันที่เลือก: <strong id="selected-date-display"></strong></p>
-        
-        <div class="form-group">
-          <label for="name-select">ชื่อ-สกุล</label>
-          <input list="names-list" id="name-input" class="form-control" placeholder="พิมพ์เพื่อค้นหาชื่อ">
-          <datalist id="names-list"></datalist>
-        </div>
+    <style>
+        /* ตั้งค่าให้เต็มหน้าจอและลบขอบขาว */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* ซ่อน Scrollbar ของตัวหน้าหลัก */
+            background-color: #f8f9fa;
+        }
 
-        <div class="form-group">
-          <label for="department-select">ภาควิชา / กลุ่มงาน</label>
-          <input list="departments-list" id="department-input" class="form-control" placeholder="พิมพ์เพื่อค้นหาภาควิชา">
-          <datalist id="departments-list"></datalist>
-        </div>
+        /* ตั้งค่า Iframe ให้ยืดเต็มพื้นที่ */
+        iframe {
+            display: block; /* ลบช่องว่างด้านล่างที่มักเกิดใน iframe */
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
 
-        <div class="form-group">
-          <label for="course-select">วิชา / หัวข้อที่เรียน</label>
-          <select id="course-select" class="form-control">
-            <option value="">-- เลือกวิชา --</option>
-          </select>
-          <button id="course-detail-btn" class="link-button">รายละเอียดคอร์สเรียน</button>
-        </div>
-        
-        <div id="learning-progress" class="hidden">
-            <p>เรียนไปแล้ว: <span id="hours-learned"></span> / <span id="total-hours"></span> ชั่วโมง</p>
-            <p>(ต้องเรียนเพิ่มอีก <span id="hours-remaining"></span> ชั่วโมง)</p>
-        </div>
+    <iframe 
+        src="https://script.google.com/macros/s/AKfycbwIUUTKlCbfkhMyWkzysj3PDAhRyaG08X0MB0HREfz5wwr6iICt0YfTGnzqvD3GBwwR/exec" 
+        allow="geolocation; microphone; camera">
+    </iframe>
 
-        <div id="daily-bookings-display" class="form-group">
-              </div>
-        <div class="form-group">
-            <label>เลือกเวลาที่ต้องการเรียน</label>
-            <div class="time-selector">
-                <div class="time-input-group">
-                  <label for="start-time">เวลาเริ่ม:</label>
-                  <input type="time" id="start-time" class="form-control" step="1800"> </div>
-                <div class="time-input-group">
-                  <label for="end-time">เวลาสิ้นสุด:</label>
-                  <input type="time" id="end-time" class="form-control" step="1800">
-                </div>
-            </div>
-            <p>รวมเวลาที่เลือก: <strong id="total-selected-time">0.00</strong> ชม.</p>
-            <small>*เลือกได้น้อยสุด 30 นาที และมากที่สุด 5 ชั่วโมง</small>
-        </div>
-
-        <div class="popup-actions">
-          <button id="cancel-btn" class="btn btn-danger">ยกเลิก</button>
-          <button id="confirm-btn" class="btn btn-success">ยืนยันการจอง</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="custom-modal" class="modal-container">
-      <div class="modal-content">
-        <h3 id="modal-title">หัวข้อ</h3>
-        <p id="modal-message">ข้อความ</p>
-        <div id="modal-actions" class="modal-actions">
-          <a href="#" id="modal-link-btn" class="btn btn-primary" target="_blank" style="display: none;">ไปที่บทเรียน</a>
-          <button id="modal-confirm-btn" class="btn btn-success">ปิดหน้าต่าง</button>
-          <button id="modal-cancel-btn" class="btn btn-danger">ยกเลิก</button>
-        </div>
-      </div>
-    </div>
-
-    <?!= include('JavaScript'); ?>
-  </body>
+</body>
 </html>
+
+

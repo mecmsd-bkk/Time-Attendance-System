@@ -20,7 +20,7 @@
 
         /* ตั้งค่า Iframe ให้ยืดเต็มพื้นที่ */
         iframe {
-            display: block; /* ลบช่องว่างด้านล่างที่มักเกิดใน iframe */
+            display: block;
             width: 100%;
             height: 100%;
             border: none;
@@ -31,12 +31,10 @@
 
     <iframe 
         src="https://script.google.com/macros/s/AKfycbwIUUTKlCbfkhMyWkzysj3PDAhRyaG08X0MB0HREfz5wwr6iICt0YfTGnzqvD3GBwwR/exec" 
-        allow="geolocation; microphone; camera">
+        allow="geolocation *; microphone *; camera *; fullscreen *; autoplay *; display-capture *; payment *"
+        allowfullscreen
+        scrolling="no">
     </iframe>
 
 </body>
 </html>
-
-
-
-
